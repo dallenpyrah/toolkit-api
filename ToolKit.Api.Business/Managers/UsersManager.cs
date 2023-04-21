@@ -31,4 +31,15 @@ public class UsersManager : IUsersManager
         return user.ToApiResponse("User created successfully.");
     }
 
+    public ApiResponse<User> GetUserById(int id)
+    {
+        User? user = _usersRepository.GetUserById(id);
+        
+        if (user == null)
+        {
+            throw new UserNotFoundException("User not found.");
+        }
+        
+        return user.ToApiResponse("User found successfully.");
+    }
 }

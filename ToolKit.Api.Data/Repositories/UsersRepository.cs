@@ -25,4 +25,9 @@ public class UsersRepository : IUsersRepository
     {
         return _context.Users.Any(u => u.Email == userEmail);
     }
+
+    public User? GetUserById(int id)
+    {
+        return _context.Users.FirstOrDefault(u => u.Id == id);
+    }
 }

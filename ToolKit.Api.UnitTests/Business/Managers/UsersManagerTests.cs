@@ -98,4 +98,63 @@ public class UsersManagerTests
 
         Assert.Equal("User created successfully.", apiResponse.Message);
     }
+    
+    
+    [Theory, AutoData]
+    public void GetUserById_WhenUserNotFound_ThrowsUserNotFoundException(int id)
+    {
+        _usersRepositoryMock
+            .Setup(repo => repo.GetUserById(id))
+            .Returns((User?)null);
+
+        Assert.Throws<UserNotFoundException>(() => _usersManager.GetUserById(id));
+    }
+
+    [Theory, AutoData]
+    public void GetUserById_WhenUserFound_ApiResponseIsNotNull(int id, User user)
+    {
+        _usersRepositoryMock
+            .Setup(repo => repo.GetUserById(id))
+            .Returns(user);
+
+        var apiResponse = _usersManager.GetUserById(id);
+
+        Assert.NotNull(apiResponse);
+    }
+
+    [Theory, AutoData]
+    public void GetUserById_WhenUserFound_ApiResponseBodyIsNotNull(int id, User user)
+    {
+        _usersRepositoryMock
+            .Setup(repo => repo.GetUserById(id))
+            .Returns(user);
+
+        var apiResponse = _usersManager.GetUserById(id);
+
+        Assert.NotNull(apiResponse.Body);
+    }
+
+    [Theory, AutoData]
+    public void GetUserById_WhenUserFound_ApiResponseBodyIsSameAsRetrievedUser(int id, User user)
+    {
+        _usersRepositoryMock
+            .Setup(repo => repo.GetUserById(id))
+            .Returns(user);
+
+        var apiResponse = _usersManager.GetUserById(id);
+
+        Assert.Same(user, apiResponse.Body);
+    }
+
+    [Theory, AutoData]
+    public void GetUserById_WhenUserFound_ApiResponseMessageIsUserFoundSuccessfully(int id, User user)
+    {
+        _usersRepositoryMock
+            .Setup(repo => repo.GetUserById(id))
+            .Returns(user);
+
+        var apiResponse = _usersManager.GetUserById(id);
+
+        Assert.Equal("User found successfully.", apiResponse.Message);
+    }
 }

@@ -1,3 +1,4 @@
+using AutoFixture.Xunit2;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
@@ -133,5 +134,31 @@ public class UsersControllerTests
         IActionResult actionResult = _usersController.CreateUser(createUserRequest);
 
         Assert.IsType<OkObjectResult>(actionResult);
+    }
+    
+    [Theory, AutoData]
+    public void GetUserById_WhenUserNotFound_ReturnsNotFoundStatusCode(int id)
+    {
+        _usersManagerMock
+            .Setup(manager => manager.GetUserById(id))
+            .Throws(new UserNotFoundException("User not found."));
+
+        IActionResult actionResult = _usersController.GetUserById(id);
+
+        var statusCodeResult = Assert.IsType<ObjectResult>(actionResult);
+        Assert.Equal(StatusCodes.Status404NotFound, statusCodeResult.StatusCode);
+    }
+
+    [Theory, AutoData]
+    public void GetUserById_WhenUserFound_ReturnsOkStatusCode(int id, User user)
+    {
+        _usersManagerMock
+            .Setup(manager => manager.GetUserById(id))
+            .Returns(new ApiResponse<User> { Body = user });
+
+        IActionResult actionResult = _usersController.GetUserById(id);
+
+        var statusCodeResult = Assert.IsType<OkObjectResult>(actionResult);
+        Assert.Equal(StatusCodes.Status200OK, statusCodeResult.StatusCode);
     }
 }

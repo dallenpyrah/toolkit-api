@@ -6,4 +6,5 @@ public interface IUsersRepository
 {
     User CreateUser(User user);
     bool IsEmailAlreadyRegistered(string userEmail);
+    User? GetUserById(int id);
 }

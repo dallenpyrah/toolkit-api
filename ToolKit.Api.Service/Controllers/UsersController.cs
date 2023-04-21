@@ -29,7 +29,19 @@ public class UsersController : ControllerBase
     [Authorize]
     public IActionResult GetUserById(int id)
     {
-        return Ok();
+        try
+        {
+            ApiResponse<User> response = _usersManager.GetUserById(id);
+            return Ok(response);
+        } 
+        catch (UserNotFoundException e)
+        {
+            return StatusCode(StatusCodes.Status404NotFound, e.Message);
+        }
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
     }
     
     [HttpPost]
