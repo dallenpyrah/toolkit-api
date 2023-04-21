@@ -8,7 +8,10 @@
 
     <ItemGroup>
       <Folder Include="Providers" />
-      <Folder Include="Repositories" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ToolKit.Api.Interfaces\ToolKit.Api.Interfaces.csproj" />
     </ItemGroup>
 
 </Project>

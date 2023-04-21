@@ -6,4 +6,8 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\ToolKit.Api.DataModel\ToolKit.Api.DataModel.csproj" />
+    </ItemGroup>
+
 </Project>

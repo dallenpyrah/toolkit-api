@@ -8,7 +8,11 @@
 
     <ItemGroup>
       <Folder Include="Providers" />
-      <Folder Include="Repositories" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\ToolKit.Api.Contracts\ToolKit.Api.Contracts.csproj" />
+      <ProjectReference Include="..\ToolKit.Api.DataModel\ToolKit.Api.DataModel.csproj" />
     </ItemGroup>
 
 </Project>

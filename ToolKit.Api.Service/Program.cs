@@ -7,8 +7,10 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ToolKit.Api.Business.Extensions;
 using ToolKit.Api.Business.Managers;
+using ToolKit.Api.Data.Repositories;
 using ToolKit.Api.DataModel;
 using ToolKit.Api.Interfaces.Managers;
+using ToolKit.Api.Interfaces.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
@@ -44,6 +46,8 @@ builder.Services
 
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 builder.Services.AddScoped<IUsersManager, UsersManager>();
+builder.Services.AddScoped<IUsersRepository, UsersRepository>();
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

@@ -1,5 +1,8 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using ToolKit.Api.Business.Exceptions;
+using ToolKit.Api.Contracts;
+using ToolKit.Api.DataModel.Entities;
 using ToolKit.Api.Interfaces.Managers;
 
 namespace ToolKit.Api.Service.Controllers;
@@ -31,9 +34,25 @@ public class UsersController : ControllerBase
     
     [HttpPost]
     [Authorize]
-    public IActionResult CreateUser()
+    public IActionResult CreateUser([FromBody]CreateUserRequest request)
     {
-        return Ok();
+        try
+        {
+            ApiResponse<User> response = _usersManager.CreateUser(request);
+            return Ok(response);
+        } 
+        catch (UserValidationException e)
+        {
+            return StatusCode(StatusCodes.Status422UnprocessableEntity, e.Message);
+        }
+        catch (EmailAlreadyRegisteredException e)
+        {
+            return StatusCode(StatusCodes.Status409Conflict, e.Message);
+        } 
+        catch (Exception e)
+        {
+            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+        }
     }
     
     [HttpPut("{id}")]
