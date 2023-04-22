@@ -8,6 +8,8 @@ The following secrets do not show in the appsettings.json files
 - Auth0:ClientSecret
 - Auth0:ClientId
 - Auth0:Audience
+- GitHub:ClientId
+- GitHub:ClientSecret
 
 To set secrets use the command below for example
 - dotnet user-secrets set "Auth0:Domain" "{value}"   

@@ -7,9 +7,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ToolKit.Api.Business.Extensions;
 using ToolKit.Api.Business.Managers;
+using ToolKit.Api.Business.Providers;
 using ToolKit.Api.Data.Repositories;
 using ToolKit.Api.DataModel;
 using ToolKit.Api.Interfaces.Managers;
+using ToolKit.Api.Interfaces.Providers;
 using ToolKit.Api.Interfaces.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -47,7 +49,14 @@ builder.Services
 builder.Services.AddSingleton<IAuthorizationHandler, HasScopeHandler>();
 builder.Services.AddScoped<IUsersManager, UsersManager>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
-
+builder.Services.AddScoped<IGitHubAuthManager, GitHubAuthManager>();
+builder.Services.AddScoped<IGitHubAuthProvider, GitHubAuthProvider>();
+builder.Services.AddHttpClient("GitHub", client =>
+{
+    client.BaseAddress = new Uri("https://github.com");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+    client.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactory-Sample");
+});
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

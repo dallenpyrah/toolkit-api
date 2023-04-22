@@ -12,7 +12,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolKit.Api.Data", "ToolKit
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolKit.Api.Contracts", "ToolKit.Api.Contracts\ToolKit.Api.Contracts.csproj", "{45673BE8-577A-4AFC-9911-8A9E236DC0C9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolKit.Api.UnitTests", "ToolKit.Api.UnitTests\ToolKit.Api.UnitTests.csproj", "{6B68F70D-953E-4DC9-B8BC-DB77C8E51410}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ToolKit.Api.Tests", "ToolKit.Api.Tests\ToolKit.Api.Tests.csproj", "{6B68F70D-953E-4DC9-B8BC-DB77C8E51410}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
