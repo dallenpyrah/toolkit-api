@@ -1,5 +1,4 @@
 using System.Security.Claims;
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
@@ -8,13 +7,11 @@ using Microsoft.OpenApi.Models;
 using ToolKit.Api.Business.Extensions;
 using ToolKit.Api.Business.Managers;
 using ToolKit.Api.Business.Managers.GitHub;
-using ToolKit.Api.Business.Providers;
 using ToolKit.Api.Business.Providers.GitHub;
 using ToolKit.Api.Data.Repositories;
 using ToolKit.Api.DataModel;
 using ToolKit.Api.Interfaces.Managers;
 using ToolKit.Api.Interfaces.Managers.GitHub;
-using ToolKit.Api.Interfaces.Providers;
 using ToolKit.Api.Interfaces.Providers.GitHub;
 using ToolKit.Api.Interfaces.Repositories;
 
@@ -57,13 +54,16 @@ builder.Services.AddScoped<IGitHubAuthManager, GitHubAuthManager>();
 builder.Services.AddScoped<IGitHubAuthProvider, GitHubAuthProvider>();
 builder.Services.AddScoped<IGitHubUserReposProvider, GitHubUserReposProvider>();
 builder.Services.AddScoped<IGitHubUserReposManager, GitHubUserReposManager>();
+builder.Services.AddScoped<IGitHubUserRepoCommitsManager, GitHubUserRepoCommitsManager>();
+builder.Services.AddScoped<IGitHubUserRepoCommitsProvider, GitHubUserRepoCommitsProvider>();
+
 builder.Services.AddHttpClient("GitHub", client =>
 {
     client.BaseAddress = new Uri("https://github.com");
     client.DefaultRequestHeaders.Add("Accept", "application/json");
     client.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactory-Sample");
 });
-builder.Services.AddHttpClient("GitHub API", client =>
+builder.Services.AddHttpClient("GitHubApi", client =>
 {
     client.BaseAddress = new Uri("https://api.github.com");
     client.DefaultRequestHeaders.Add("Accept", "application/json");
@@ -124,7 +124,8 @@ if (app.Environment.IsDevelopment())
         // Configure Swagger UI to use Auth0
         c.OAuthClientId(builder.Configuration["Auth0:ClientId"]);
         c.OAuthClientSecret(builder.Configuration["Auth0:ClientSecret"]); // Only if you are using a confidential client
-        c.OAuthAdditionalQueryStringParams(new Dictionary<string, string> {
+        c.OAuthAdditionalQueryStringParams(new Dictionary<string, string>
+        {
             { "audience", builder.Configuration["Auth0:Audience"] }
         });
         c.OAuthAppName("Swagger UI");

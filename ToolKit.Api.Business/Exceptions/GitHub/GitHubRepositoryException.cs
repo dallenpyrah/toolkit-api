@@ -2,13 +2,13 @@ using System.Net;
 
 namespace ToolKit.Api.Business.Exceptions.GitHub;
 
-public class RetrieveGitHubUserReposException : Exception
+public class GitHubRepositoryException : Exception
 {
     public string? ResponseMessageReasonPhrase { get; set; }
 
     public HttpStatusCode ResponseMessageStatusCode { get; set; }
-    
-    public RetrieveGitHubUserReposException(HttpStatusCode responseMessageStatusCode, string? responseMessageReasonPhrase)
+
+    public GitHubRepositoryException(HttpStatusCode responseMessageStatusCode, string? responseMessageReasonPhrase)
     {
         ResponseMessageStatusCode = responseMessageStatusCode;
         ResponseMessageReasonPhrase = responseMessageReasonPhrase;

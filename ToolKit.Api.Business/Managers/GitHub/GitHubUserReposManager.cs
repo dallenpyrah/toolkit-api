@@ -1,4 +1,4 @@
-using System.Text.Json;
+using Newtonsoft.Json;
 using ToolKit.Api.Business.Exceptions.GitHub;
 using ToolKit.Api.Contracts;
 using ToolKit.Api.Contracts.GitHub;
@@ -21,14 +21,30 @@ public class GitHubUserReposManager : IGitHubUserReposManager
         HttpResponseMessage responseMessage = await _gitHubUserReposProvider.GetReposByUsername(username);
 
         if (!responseMessage.IsSuccessStatusCode)
-            throw new RetrieveGitHubUserReposException(responseMessage.StatusCode, responseMessage.ReasonPhrase);
+            throw new GitHubRepositoryException(responseMessage.StatusCode, responseMessage.ReasonPhrase);
 
         string responseContent = await responseMessage.Content.ReadAsStringAsync();
-        IEnumerable<GitHubRepo> gitHubRepositoryResponses = JsonSerializer.Deserialize<IEnumerable<GitHubRepo>>(responseContent) ?? throw new InvalidOperationException();
+        var gitHubRepositoryResponses = JsonConvert.DeserializeObject<IEnumerable<GitHubRepo>>(responseContent);
         return new ApiResponse<IEnumerable<GitHubRepo>>()
         {
             Body = gitHubRepositoryResponses,
             Message = $"Successfully retrieved GitHub repositories for user {username}.",
+        };
+    }
+
+    public async Task<ApiResponse<GitHubRepo>> GetUserRepo(string owner, string repo)
+    {
+        var responseMessage = await _gitHubUserReposProvider.GetUserRepo(owner, repo);
+
+        if (!responseMessage.IsSuccessStatusCode)
+            throw new GitHubRepositoryException(responseMessage.StatusCode, responseMessage.ReasonPhrase);
+
+        var responseContent = await responseMessage.Content.ReadAsStringAsync();
+        var gitHubRepositoryResponse = JsonConvert.DeserializeObject<GitHubRepo>(responseContent);
+        return new ApiResponse<GitHubRepo>()
+        {
+            Body = gitHubRepositoryResponse,
+            Message = $"Successfully retrieved GitHub repository {repo} for user {owner}."
         };
     }
 }
