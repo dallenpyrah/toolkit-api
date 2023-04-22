@@ -3,11 +3,11 @@ using ToolKit.Api.Interfaces.Providers.GitHub;
 
 namespace ToolKit.Api.Business.Providers.GitHub;
 
-public class GitHubUserRepoCommitsProvider : IGitHubUserRepoCommitsProvider
+public class GitHubPublicUserRepoCommitsProvider : IGitHubPublicUserRepoCommitsProvider
 {
     private readonly IHttpClientFactory _httpClientFactory;
 
-    public GitHubUserRepoCommitsProvider(IHttpClientFactory httpClientFactory)
+    public GitHubPublicUserRepoCommitsProvider(IHttpClientFactory httpClientFactory)
     {
         _httpClientFactory = httpClientFactory;
     }

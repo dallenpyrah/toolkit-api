@@ -1,6 +1,6 @@
 namespace ToolKit.Api.Interfaces.Providers.GitHub;
 
-public interface IGitHubUserReposProvider
+public interface IGitHubPublicUserReposProvider
 {
     Task<HttpResponseMessage> GetReposByUsername(string username);
     Task<HttpResponseMessage> GetUserRepo(string owner, string repo);

@@ -2,17 +2,18 @@ using ToolKit.Api.Interfaces.Managers.GitHub;
 
 namespace ToolKit.Api.UnitTests.Service.Controllers.GitHub;
 
-public class GitHubUserRepoCommitsControllerTests
+public class GitHubPublicUserRepoCommitsControllerTests
 {
-    private readonly Mock<IGitHubUserRepoCommitsManager> _gitHubUserRepoCommitsManagerMock;
-    private readonly Mock<ILogger<GitHubUserRepoCommitsController>> _loggerMock;
-    private readonly GitHubUserRepoCommitsController _controller;
+    private readonly Mock<IGitHubPublicUserRepoCommitsManager> _gitHubUserRepoCommitsManagerMock;
+    private readonly Mock<ILogger<GitHubPublicUserRepoCommitsController>> _loggerMock;
+    private readonly GitHubPublicUserRepoCommitsController _controller;
 
-    public GitHubUserRepoCommitsControllerTests()
+    public GitHubPublicUserRepoCommitsControllerTests()
     {
-        _gitHubUserRepoCommitsManagerMock = new Mock<IGitHubUserRepoCommitsManager>();
-        _loggerMock = new Mock<ILogger<GitHubUserRepoCommitsController>>();
-        _controller = new GitHubUserRepoCommitsController(_gitHubUserRepoCommitsManagerMock.Object, _loggerMock.Object);
+        _gitHubUserRepoCommitsManagerMock = new Mock<IGitHubPublicUserRepoCommitsManager>();
+        _loggerMock = new Mock<ILogger<GitHubPublicUserRepoCommitsController>>();
+        _controller =
+            new GitHubPublicUserRepoCommitsController(_gitHubUserRepoCommitsManagerMock.Object, _loggerMock.Object);
     }
 
     [Theory]

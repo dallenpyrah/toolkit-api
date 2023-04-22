@@ -7,15 +7,15 @@ namespace ToolKit.Api.Service.Controllers.GitHub;
 
 [ApiController]
 [Route("api/github/repos/{owner}/{repo}/commits")]
-public class GitHubUserRepoCommitsController : ControllerBase
+public class GitHubPublicUserRepoCommitsController : ControllerBase
 {
-    private readonly IGitHubUserRepoCommitsManager _gitHubUserRepoCommitsManager;
-    private readonly ILogger<GitHubUserRepoCommitsController> _logger;
+    private readonly IGitHubPublicUserRepoCommitsManager _gitHubPublicUserRepoCommitsManager;
+    private readonly ILogger<GitHubPublicUserRepoCommitsController> _logger;
 
-    public GitHubUserRepoCommitsController(IGitHubUserRepoCommitsManager gitHubUserRepoCommitsManager,
-        ILogger<GitHubUserRepoCommitsController> logger)
+    public GitHubPublicUserRepoCommitsController(IGitHubPublicUserRepoCommitsManager gitHubPublicUserRepoCommitsManager,
+        ILogger<GitHubPublicUserRepoCommitsController> logger)
     {
-        _gitHubUserRepoCommitsManager = gitHubUserRepoCommitsManager;
+        _gitHubPublicUserRepoCommitsManager = gitHubPublicUserRepoCommitsManager;
         _logger = logger;
     }
 
@@ -26,7 +26,7 @@ public class GitHubUserRepoCommitsController : ControllerBase
         try
         {
             var response =
-                await _gitHubUserRepoCommitsManager.GetRepoCommits(owner, repo);
+                await _gitHubPublicUserRepoCommitsManager.GetRepoCommits(owner, repo);
             return Ok(response);
         }
         catch (GitHubRepositoryCommitException e)
@@ -49,7 +49,7 @@ public class GitHubUserRepoCommitsController : ControllerBase
         try
         {
             var response =
-                await _gitHubUserRepoCommitsManager.GetRepoCommit(owner, repo, commitId);
+                await _gitHubPublicUserRepoCommitsManager.GetRepoCommit(owner, repo, commitId);
             return Ok(response);
         }
         catch (GitHubRepositoryCommitException e)

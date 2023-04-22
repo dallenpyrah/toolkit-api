@@ -1,23 +1,21 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToolKit.Api.Business.Exceptions.GitHub;
-using ToolKit.Api.Contracts;
-using ToolKit.Api.Contracts.GitHub;
 using ToolKit.Api.Interfaces.Managers.GitHub;
 
 namespace ToolKit.Api.Service.Controllers.GitHub;
 
 [ApiController]
 [Route("api/github/repos")]
-public class GitHubUserReposController : ControllerBase
+public class GitHubPublicUserReposController : ControllerBase
 {
-    private readonly IGitHubUserReposManager _gitHubUserReposManager;
-    private ILogger<GitHubUserReposController> _logger;
+    private readonly IGitHubPublicUserReposManager _gitHubPublicUserReposManager;
+    private ILogger<GitHubPublicUserReposController> _logger;
 
-    public GitHubUserReposController(IGitHubUserReposManager gitHubUserReposManager,
-        ILogger<GitHubUserReposController> logger)
+    public GitHubPublicUserReposController(IGitHubPublicUserReposManager gitHubPublicUserReposManager,
+        ILogger<GitHubPublicUserReposController> logger)
     {
-        _gitHubUserReposManager = gitHubUserReposManager;
+        _gitHubPublicUserReposManager = gitHubPublicUserReposManager;
         _logger = logger;
     }
 
@@ -27,7 +25,7 @@ public class GitHubUserReposController : ControllerBase
     {
         try
         {
-            ApiResponse<IEnumerable<GitHubRepo>> response = await _gitHubUserReposManager.GetReposByUsername(username);
+            var response = await _gitHubPublicUserReposManager.GetReposByUsername(username);
             return Ok(response);
         }
         catch (GitHubRepositoryException e)
@@ -46,7 +44,7 @@ public class GitHubUserReposController : ControllerBase
     {
         try
         {
-            var response = await _gitHubUserReposManager.GetUserRepo(owner, repo);
+            var response = await _gitHubPublicUserReposManager.GetUserRepo(owner, repo);
             return Ok(response);
         }
         catch (GitHubRepositoryException e)

@@ -3,18 +3,18 @@ using ToolKit.Api.Interfaces.Managers.GitHub;
 
 namespace ToolKit.Api.UnitTests.Service.Controllers.GitHub;
 
-public class GitHubUserReposControllerTests
+public class GitHubPublicUserReposControllerTests
 {
-    private readonly Mock<IGitHubUserReposManager> _gitHubUserReposManagerMock;
-    private readonly Mock<ILogger<GitHubUserReposController>> _loggerMock;
-    private readonly GitHubUserReposController _gitHubUserReposController;
+    private readonly Mock<IGitHubPublicUserReposManager> _gitHubUserReposManagerMock;
+    private readonly Mock<ILogger<GitHubPublicUserReposController>> _loggerMock;
+    private readonly GitHubPublicUserReposController _gitHubPublicUserReposController;
 
-    public GitHubUserReposControllerTests()
+    public GitHubPublicUserReposControllerTests()
     {
-        _gitHubUserReposManagerMock = new Mock<IGitHubUserReposManager>();
-        _loggerMock = new Mock<ILogger<GitHubUserReposController>>();
-        _gitHubUserReposController =
-            new GitHubUserReposController(_gitHubUserReposManagerMock.Object, _loggerMock.Object);
+        _gitHubUserReposManagerMock = new Mock<IGitHubPublicUserReposManager>();
+        _loggerMock = new Mock<ILogger<GitHubPublicUserReposController>>();
+        _gitHubPublicUserReposController =
+            new GitHubPublicUserReposController(_gitHubUserReposManagerMock.Object, _loggerMock.Object);
     }
 
     [Theory, AutoData]
@@ -27,7 +27,7 @@ public class GitHubUserReposControllerTests
                 Body = repos
             });
 
-        IActionResult result = await _gitHubUserReposController.GetReposByUsername(username);
+        var result = await _gitHubPublicUserReposController.GetReposByUsername(username);
 
         var okObjectResult = Assert.IsType<OkObjectResult>(result);
     }
@@ -42,7 +42,7 @@ public class GitHubUserReposControllerTests
                 Body = repos
             });
 
-        IActionResult result = await _gitHubUserReposController.GetReposByUsername(username);
+        var result = await _gitHubPublicUserReposController.GetReposByUsername(username);
         var okObjectResult = result as OkObjectResult;
 
         var apiResponse = Assert.IsType<ApiResponse<IEnumerable<GitHubRepo>>>(okObjectResult.Value);
@@ -57,7 +57,7 @@ public class GitHubUserReposControllerTests
             .Setup(manager => manager.GetReposByUsername(username))
             .ThrowsAsync(new GitHubRepositoryException(statusCode, errorMessage));
 
-        IActionResult result = await _gitHubUserReposController.GetReposByUsername(username);
+        var result = await _gitHubPublicUserReposController.GetReposByUsername(username);
 
         Assert.IsType<ObjectResult>(result);
         Assert.Equal(StatusCodes.Status500InternalServerError, ((ObjectResult)result).StatusCode);
@@ -70,7 +70,7 @@ public class GitHubUserReposControllerTests
             .Setup(manager => manager.GetReposByUsername(username))
             .ThrowsAsync(new Exception());
 
-        IActionResult result = await _gitHubUserReposController.GetReposByUsername(username);
+        var result = await _gitHubPublicUserReposController.GetReposByUsername(username);
         Assert.IsType<ObjectResult>(result);
         Assert.Equal(StatusCodes.Status500InternalServerError, ((ObjectResult)result).StatusCode);
     }
@@ -94,7 +94,7 @@ public class GitHubUserReposControllerTests
             .Setup(manager => manager.GetUserRepo(owner, repo))
             .ReturnsAsync(response);
 
-        var result = await _gitHubUserReposController.GetRepo(owner, repo);
+        var result = await _gitHubPublicUserReposController.GetRepo(owner, repo);
 
         var okObjectResult = Assert.IsType<OkObjectResult>(result);
         Assert.Equal(response, okObjectResult.Value);
@@ -109,7 +109,7 @@ public class GitHubUserReposControllerTests
             .ThrowsAsync(new GitHubRepositoryException(HttpStatusCode.InternalServerError,
                 "Error retrieving repository."));
 
-        var result = await _gitHubUserReposController.GetRepo(owner, repo);
+        var result = await _gitHubPublicUserReposController.GetRepo(owner, repo);
 
         var statusCodeResult = Assert.IsType<ObjectResult>(result);
         Assert.Equal(StatusCodes.Status500InternalServerError, statusCodeResult.StatusCode);
@@ -124,7 +124,7 @@ public class GitHubUserReposControllerTests
             .Setup(manager => manager.GetUserRepo(owner, repo))
             .ThrowsAsync(new Exception("General error."));
 
-        var result = await _gitHubUserReposController.GetRepo(owner, repo);
+        var result = await _gitHubPublicUserReposController.GetRepo(owner, repo);
 
         var statusCodeResult = Assert.IsType<ObjectResult>(result);
         Assert.Equal(StatusCodes.Status500InternalServerError, statusCodeResult.StatusCode);

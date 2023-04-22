@@ -7,18 +7,18 @@ using ToolKit.Api.Interfaces.Providers.GitHub;
 
 namespace ToolKit.Api.Business.Managers.GitHub;
 
-public class GitHubUserReposManager : IGitHubUserReposManager
+public class GitHubPublicUserReposManager : IGitHubPublicUserReposManager
 {
-    private readonly IGitHubUserReposProvider _gitHubUserReposProvider;
+    private readonly IGitHubPublicUserReposProvider _gitHubPublicUserReposProvider;
 
-    public GitHubUserReposManager(IGitHubUserReposProvider gitHubUserReposProvider)
+    public GitHubPublicUserReposManager(IGitHubPublicUserReposProvider gitHubPublicUserReposProvider)
     {
-        _gitHubUserReposProvider = gitHubUserReposProvider;
+        _gitHubPublicUserReposProvider = gitHubPublicUserReposProvider;
     }
 
     public async Task<ApiResponse<IEnumerable<GitHubRepo>>> GetReposByUsername(string username)
     {
-        HttpResponseMessage responseMessage = await _gitHubUserReposProvider.GetReposByUsername(username);
+        var responseMessage = await _gitHubPublicUserReposProvider.GetReposByUsername(username);
 
         if (!responseMessage.IsSuccessStatusCode)
             throw new GitHubRepositoryException(responseMessage.StatusCode, responseMessage.ReasonPhrase);
@@ -34,7 +34,7 @@ public class GitHubUserReposManager : IGitHubUserReposManager
 
     public async Task<ApiResponse<GitHubRepo>> GetUserRepo(string owner, string repo)
     {
-        var responseMessage = await _gitHubUserReposProvider.GetUserRepo(owner, repo);
+        var responseMessage = await _gitHubPublicUserReposProvider.GetUserRepo(owner, repo);
 
         if (!responseMessage.IsSuccessStatusCode)
             throw new GitHubRepositoryException(responseMessage.StatusCode, responseMessage.ReasonPhrase);

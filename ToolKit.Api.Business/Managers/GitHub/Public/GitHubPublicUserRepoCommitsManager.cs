@@ -7,18 +7,18 @@ using ToolKit.Api.Interfaces.Providers.GitHub;
 
 namespace ToolKit.Api.Business.Managers.GitHub;
 
-public class GitHubUserRepoCommitsManager : IGitHubUserRepoCommitsManager
+public class GitHubPublicUserRepoCommitsManager : IGitHubPublicUserRepoCommitsManager
 {
-    private readonly IGitHubUserRepoCommitsProvider _gitHubUserRepoCommitsProvider;
+    private readonly IGitHubPublicUserRepoCommitsProvider _gitHubPublicUserRepoCommitsProvider;
 
-    public GitHubUserRepoCommitsManager(IGitHubUserRepoCommitsProvider gitHubUserRepoCommitsProvider)
+    public GitHubPublicUserRepoCommitsManager(IGitHubPublicUserRepoCommitsProvider gitHubPublicUserRepoCommitsProvider)
     {
-        _gitHubUserRepoCommitsProvider = gitHubUserRepoCommitsProvider;
+        _gitHubPublicUserRepoCommitsProvider = gitHubPublicUserRepoCommitsProvider;
     }
 
     public async Task<ApiResponse<IEnumerable<GitHubCommitResponse>>> GetRepoCommits(string owner, string repo)
     {
-        var response = await _gitHubUserRepoCommitsProvider.GetRepoCommits(owner, repo);
+        var response = await _gitHubPublicUserRepoCommitsProvider.GetRepoCommits(owner, repo);
 
         if (!response.IsSuccessStatusCode)
             throw new GitHubRepositoryCommitException(response.StatusCode, response.ReasonPhrase);
@@ -34,7 +34,7 @@ public class GitHubUserRepoCommitsManager : IGitHubUserRepoCommitsManager
 
     public async Task<ApiResponse<GitHubCommitResponse>> GetRepoCommit(string owner, string repo, string commitId)
     {
-        var response = await _gitHubUserRepoCommitsProvider.GetRepoCommit(owner, repo, commitId);
+        var response = await _gitHubPublicUserRepoCommitsProvider.GetRepoCommit(owner, repo, commitId);
 
         if (!response.IsSuccessStatusCode)
             throw new GitHubRepositoryCommitException(response.StatusCode, response.ReasonPhrase);

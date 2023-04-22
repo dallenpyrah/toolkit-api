@@ -4,15 +4,15 @@ using ToolKit.Api.Interfaces.Providers.GitHub;
 
 namespace ToolKit.Api.UnitTests.Business.Managers.GitHub;
 
-public class GitHubUserReposManagerTests
+public class GitHubPublicUserReposManagerTests
 {
-    private readonly Mock<IGitHubUserReposProvider> _gitHubUserReposProviderMock;
-    private readonly GitHubUserReposManager _gitHubUserReposManager;
+    private readonly Mock<IGitHubPublicUserReposProvider> _gitHubUserReposProviderMock;
+    private readonly GitHubPublicUserReposManager _gitHubPublicUserReposManager;
 
-    public GitHubUserReposManagerTests()
+    public GitHubPublicUserReposManagerTests()
     {
-        _gitHubUserReposProviderMock = new Mock<IGitHubUserReposProvider>();
-        _gitHubUserReposManager = new GitHubUserReposManager(_gitHubUserReposProviderMock.Object);
+        _gitHubUserReposProviderMock = new Mock<IGitHubPublicUserReposProvider>();
+        _gitHubPublicUserReposManager = new GitHubPublicUserReposManager(_gitHubUserReposProviderMock.Object);
     }
 
     [Theory, AutoData]
@@ -28,7 +28,7 @@ public class GitHubUserReposManagerTests
             .Setup(provider => provider.GetReposByUsername(username))
             .ReturnsAsync(httpResponseMessage);
 
-        var result = await _gitHubUserReposManager.GetReposByUsername(username);
+        var result = await _gitHubPublicUserReposManager.GetReposByUsername(username);
         var expected = new ApiResponse<IEnumerable<GitHubRepo>>()
         {
             Body = gitHubRepos,
@@ -51,7 +51,7 @@ public class GitHubUserReposManagerTests
             .Setup(provider => provider.GetReposByUsername(username))
             .ReturnsAsync(httpResponseMessage);
 
-        Assert.ThrowsAsync<GitHubRepositoryException>(() => _gitHubUserReposManager.GetReposByUsername(username));
+        Assert.ThrowsAsync<GitHubRepositoryException>(() => _gitHubPublicUserReposManager.GetReposByUsername(username));
     }
 
     [Theory, AutoData]
@@ -66,7 +66,7 @@ public class GitHubUserReposManagerTests
             .Setup(provider => provider.GetReposByUsername(username))
             .ReturnsAsync(httpResponseMessage);
 
-        await _gitHubUserReposManager.GetReposByUsername(username);
+        await _gitHubPublicUserReposManager.GetReposByUsername(username);
 
         _gitHubUserReposProviderMock.Verify(provider => provider.GetReposByUsername(username), Times.Once);
     }
@@ -89,7 +89,7 @@ public class GitHubUserReposManagerTests
             .Setup(provider => provider.GetUserRepo(owner, repo))
             .ReturnsAsync(httpResponseMessage);
 
-        var result = await _gitHubUserReposManager.GetUserRepo(owner, repo);
+        var result = await _gitHubPublicUserReposManager.GetUserRepo(owner, repo);
         var expected = new ApiResponse<GitHubRepo>()
         {
             Body = gitHubRepo,
@@ -116,7 +116,7 @@ public class GitHubUserReposManagerTests
 
         await Assert.ThrowsAsync<GitHubRepositoryException>(async () =>
         {
-            await _gitHubUserReposManager.GetUserRepo(owner, repo);
+            await _gitHubPublicUserReposManager.GetUserRepo(owner, repo);
         });
     }
 }
