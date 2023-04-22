@@ -1,11 +1,11 @@
 using System.Net.Http.Headers;
 using System.Text.Json;
 using Microsoft.Extensions.Configuration;
-using ToolKit.Api.Business.Exceptions;
-using ToolKit.Api.Interfaces.Managers;
-using ToolKit.Api.Interfaces.Providers;
+using ToolKit.Api.Business.Exceptions.GitHub;
+using ToolKit.Api.Interfaces.Managers.GitHub;
+using ToolKit.Api.Interfaces.Providers.GitHub;
 
-namespace ToolKit.Api.Business.Managers;
+namespace ToolKit.Api.Business.Managers.GitHub;
 
 public class GitHubAuthManager : IGitHubAuthManager
 {

@@ -1,14 +1,7 @@
-using System.Net;
-using AutoFixture.Xunit2;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using Moq;
-using ToolKit.Api.Interfaces.Managers;
-using ToolKit.Api.Service.Controllers;
-using ToolKit.Api.Service.Controllers.GitHub;
+using ToolKit.Api.Business.Exceptions.GitHub;
+using ToolKit.Api.Interfaces.Managers.GitHub;
 
-namespace ToolKit.Api.UnitTests.Service.Controllers;
+namespace ToolKit.Api.UnitTests.Service.Controllers.GitHub;
 
 public class GitHubAuthControllerTests
 {

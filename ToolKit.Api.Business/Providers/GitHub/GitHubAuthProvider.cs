@@ -1,8 +1,6 @@
-using Newtonsoft.Json;
-using ToolKit.Api.Contracts;
-using ToolKit.Api.Interfaces.Providers;
+using ToolKit.Api.Interfaces.Providers.GitHub;
 
-namespace ToolKit.Api.Business.Providers;
+namespace ToolKit.Api.Business.Providers.GitHub;
 
 public class GitHubAuthProvider : IGitHubAuthProvider
 {

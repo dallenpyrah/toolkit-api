@@ -7,11 +7,15 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ToolKit.Api.Business.Extensions;
 using ToolKit.Api.Business.Managers;
+using ToolKit.Api.Business.Managers.GitHub;
 using ToolKit.Api.Business.Providers;
+using ToolKit.Api.Business.Providers.GitHub;
 using ToolKit.Api.Data.Repositories;
 using ToolKit.Api.DataModel;
 using ToolKit.Api.Interfaces.Managers;
+using ToolKit.Api.Interfaces.Managers.GitHub;
 using ToolKit.Api.Interfaces.Providers;
+using ToolKit.Api.Interfaces.Providers.GitHub;
 using ToolKit.Api.Interfaces.Repositories;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -51,9 +55,17 @@ builder.Services.AddScoped<IUsersManager, UsersManager>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IGitHubAuthManager, GitHubAuthManager>();
 builder.Services.AddScoped<IGitHubAuthProvider, GitHubAuthProvider>();
+builder.Services.AddScoped<IGitHubUserReposProvider, GitHubUserReposProvider>();
+builder.Services.AddScoped<IGitHubUserReposManager, GitHubUserReposManager>();
 builder.Services.AddHttpClient("GitHub", client =>
 {
     client.BaseAddress = new Uri("https://github.com");
+    client.DefaultRequestHeaders.Add("Accept", "application/json");
+    client.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactory-Sample");
+});
+builder.Services.AddHttpClient("GitHub API", client =>
+{
+    client.BaseAddress = new Uri("https://api.github.com");
     client.DefaultRequestHeaders.Add("Accept", "application/json");
     client.DefaultRequestHeaders.Add("User-Agent", "HttpClientFactory-Sample");
 });

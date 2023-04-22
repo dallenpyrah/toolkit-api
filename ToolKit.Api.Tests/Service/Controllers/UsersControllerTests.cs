@@ -1,10 +1,3 @@
-using AutoFixture.Xunit2;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Moq;
-using ToolKit.Api.Interfaces.Managers;
-using ToolKit.Api.Service.Controllers;
-
 namespace ToolKit.Api.UnitTests.Service.Controllers;
 
 public class UsersControllerTests

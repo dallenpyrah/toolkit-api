@@ -1,8 +1,11 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToolKit.Api.Business.Exceptions;
+using ToolKit.Api.Business.Exceptions.GitHub;
 using ToolKit.Api.Contracts;
+using ToolKit.Api.Contracts.GitHub;
 using ToolKit.Api.Interfaces.Managers;
+using ToolKit.Api.Interfaces.Managers.GitHub;
 
 namespace ToolKit.Api.Service.Controllers.GitHub;
 

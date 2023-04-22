@@ -1,4 +1,4 @@
-namespace ToolKit.Api.Contracts;
+namespace ToolKit.Api.Contracts.GitHub;
 
 public class GitHubAuthCallbackResponse
 {

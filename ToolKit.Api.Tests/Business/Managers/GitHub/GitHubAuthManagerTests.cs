@@ -1,11 +1,8 @@
-using System.Net;
-using AutoFixture.Xunit2;
 using Microsoft.Extensions.Configuration;
-using Moq;
-using ToolKit.Api.Business.Managers;
-using ToolKit.Api.Interfaces.Providers;
+using ToolKit.Api.Business.Managers.GitHub;
+using ToolKit.Api.Interfaces.Providers.GitHub;
 
-namespace ToolKit.Api.UnitTests.Business.Managers;
+namespace ToolKit.Api.UnitTests.Business.Managers.GitHub;
 
 public class GitHubAuthManagerTests
 {

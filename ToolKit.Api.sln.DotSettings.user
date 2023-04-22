@@ -1,7 +1,10 @@
 ﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5199d30f_002Db983_002D45f2_002Dbea9_002D5ddc951f6a88/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="UsersManagerTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=5199d30f_002Db983_002D45f2_002Dbea9_002D5ddc951f6a88/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="UsersManagerTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
   &lt;And&gt;
     &lt;Project Location="/Users/dallenpyrah/development/ToolKit.Api.Service/ToolKit.Api.Tests" Presentation="&amp;lt;ToolKit.Api.Tests&amp;gt;" /&gt;
     &lt;Namespace&gt;ToolKit.Api.UnitTests&lt;/Namespace&gt;
   &lt;/And&gt;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d1601cd5_002Dbce7_002D447b_002Db035_002Db0e0209257aa/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" IsActive="True" Name="GitHubUserReposControllerTests" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;
+  &lt;Project Location="/Users/dallenpyrah/development/ToolKit.Api.Service/ToolKit.Api.Tests" Presentation="&amp;lt;ToolKit.Api.Tests&amp;gt;" /&gt;
 &lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

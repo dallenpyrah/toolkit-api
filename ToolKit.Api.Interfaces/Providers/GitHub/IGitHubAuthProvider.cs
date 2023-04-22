@@ -1,4 +1,4 @@
-namespace ToolKit.Api.Interfaces.Providers;
+namespace ToolKit.Api.Interfaces.Providers.GitHub;
 
 public interface IGitHubAuthProvider
 {

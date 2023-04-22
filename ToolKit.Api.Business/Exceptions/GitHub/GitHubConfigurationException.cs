@@ -1,4 +1,4 @@
-namespace ToolKit.Api.Business.Exceptions;
+namespace ToolKit.Api.Business.Exceptions.GitHub;
 
 public class GitHubConfigurationException : Exception
 {
