@@ -22,8 +22,8 @@ public class GitHubAuthManager : IGitHubAuthManager
     {
         string? clientId = _configuration["GitHub:ClientId"];
         string? redirectUri = _configuration["GitHub:RedirectUri"];
-        string scope = "repo user"; // Adjust the scope according to your needs
-        string state = Guid.NewGuid().ToString(); // Generate a unique state value to protect against CSRF
+        string scope = "repo user"; 
+        string state = Guid.NewGuid().ToString(); 
         
         return
             $"https://github.com/login/oauth/authorize?client_id={clientId}&redirect_uri={Uri.EscapeDataString(redirectUri)}&scope={Uri.EscapeDataString(scope)}&state={state}";
@@ -31,7 +31,6 @@ public class GitHubAuthManager : IGitHubAuthManager
 
     public HttpRequestMessage GetTokenRequest(string code, string state)
     {
-        // Validate the state value to protect against CSRF
         string? clientId = _configuration["GitHub:ClientId"];
         string? clientSecret = _configuration["GitHub:ClientSecret"];
         string? redirectUri = _configuration["GitHub:RedirectUri"];
