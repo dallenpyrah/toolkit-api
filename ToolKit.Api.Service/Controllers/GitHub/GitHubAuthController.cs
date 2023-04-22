@@ -1,12 +1,10 @@
-using System.Net.Http.Headers;
-using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ToolKit.Api.Business.Exceptions;
 using ToolKit.Api.Contracts;
 using ToolKit.Api.Interfaces.Managers;
 
-namespace ToolKit.Api.Service.Controllers;
+namespace ToolKit.Api.Service.Controllers.GitHub;
 
 [ApiController]
 [Route("api/github")]

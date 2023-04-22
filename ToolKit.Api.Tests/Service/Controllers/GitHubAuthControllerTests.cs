@@ -6,6 +6,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using ToolKit.Api.Interfaces.Managers;
 using ToolKit.Api.Service.Controllers;
+using ToolKit.Api.Service.Controllers.GitHub;
 
 namespace ToolKit.Api.UnitTests.Service.Controllers;
 
