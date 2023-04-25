@@ -1,3 +1,4 @@
+using Microsoft.Extensions.Configuration;
 using ToolKit.Api.Business.Exceptions.GitHub;
 using ToolKit.Api.Interfaces.Managers.GitHub;
 
@@ -8,6 +9,7 @@ public class GitHubAuthControllerTests
     private readonly Mock<IGitHubAuthManager> _gitHubAuthManagerMock;
     private readonly Mock<IHttpClientFactory> _httpClientFactoryMock;
     private readonly Mock<ILogger<GitHubAuthController>> _loggerMock;
+    private readonly Mock<IConfiguration> _configurationMock;
     private readonly GitHubAuthController _gitHubAuthController;
 
     public GitHubAuthControllerTests()
@@ -15,23 +17,11 @@ public class GitHubAuthControllerTests
         _gitHubAuthManagerMock = new Mock<IGitHubAuthManager>();
         _httpClientFactoryMock = new Mock<IHttpClientFactory>();
         _loggerMock = new Mock<ILogger<GitHubAuthController>>();
+        _configurationMock = new Mock<IConfiguration>();
         _gitHubAuthController = new GitHubAuthController(_gitHubAuthManagerMock.Object, _httpClientFactoryMock.Object,
-            _loggerMock.Object);
+            _loggerMock.Object, _configurationMock.Object);
     }
 
-    [Fact]
-    public void Authenticate_RedirectsToGitHubAuthUrl()
-    {
-        var githubAuthUrl = "https://github.com/login/oauth/authorize?...";
-        _gitHubAuthManagerMock
-            .Setup(manager => manager.GetGitHubAuthUrl())
-            .Returns(githubAuthUrl);
-
-        IActionResult result = _gitHubAuthController.Authenticate();
-
-        var redirectResult = Assert.IsType<RedirectResult>(result);
-        Assert.Equal(githubAuthUrl, redirectResult.Url);
-    }
 
     [Theory, AutoData]
     public async Task Callback_SuccessfullyRetrievesAccessToken_ReturnsOkWithAccessToken(string code, string state,
@@ -76,19 +66,6 @@ public class GitHubAuthControllerTests
 
         Assert.IsType<ObjectResult>(result);
         Assert.Equal(StatusCodes.Status500InternalServerError, ((ObjectResult)result).StatusCode);
-    }
-
-    [Fact]
-    public void Authenticate_CallsGetGitHubAuthUrl()
-    {
-        var githubAuthUrl = "https://github.com/login/oauth/authorize?...";
-        _gitHubAuthManagerMock
-            .Setup(manager => manager.GetGitHubAuthUrl())
-            .Returns(githubAuthUrl);
-
-        _gitHubAuthController.Authenticate();
-
-        _gitHubAuthManagerMock.Verify(manager => manager.GetGitHubAuthUrl(), Times.Once);
     }
 
     [Theory, AutoData]

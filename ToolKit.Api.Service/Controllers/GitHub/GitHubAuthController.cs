@@ -16,20 +16,22 @@ public class GitHubAuthController : ControllerBase
     private readonly IGitHubAuthManager _gitHubAuthManager;
     private readonly IHttpClientFactory _httpClientFactory;
     private ILogger<GitHubAuthController> _logger;
+    private readonly IConfiguration _configuration;
 
-    public GitHubAuthController(IGitHubAuthManager gitHubAuthManager, IHttpClientFactory httpClientFactory, ILogger<GitHubAuthController> logger)
+    public GitHubAuthController(IGitHubAuthManager gitHubAuthManager, IHttpClientFactory httpClientFactory, ILogger<GitHubAuthController> logger, IConfiguration configuration)
     {
         _gitHubAuthManager = gitHubAuthManager;
         _httpClientFactory = httpClientFactory;
         _logger = logger;
+        _configuration = configuration;
     }
-    
-    [HttpGet("authenticate")]
-    [Authorize]
-    public IActionResult Authenticate()
+
+    [HttpGet("install")]
+    public IActionResult Install()
     {
-        string githubAuthUrl = _gitHubAuthManager.GetGitHubAuthUrl();
-        return Redirect(githubAuthUrl);
+        string? clientId = _configuration["GitHub:ClientId"];
+        string installationUrl = $"https://github.com/apps/toolkit-desktop/installations/new?client_id={clientId}";
+        return Redirect(installationUrl);
     }
     
     [HttpGet("callback")]

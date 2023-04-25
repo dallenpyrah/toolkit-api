@@ -52,10 +52,6 @@ builder.Services.AddScoped<IUsersManager, UsersManager>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IGitHubAuthManager, GitHubAuthManager>();
 builder.Services.AddScoped<IGitHubAuthProvider, GitHubAuthProvider>();
-builder.Services.AddScoped<IGitHubPublicUserReposProvider, GitHubPublicUserReposProvider>();
-builder.Services.AddScoped<IGitHubPublicUserReposManager, GitHubPublicUserReposManager>();
-builder.Services.AddScoped<IGitHubPublicUserRepoCommitsManager, GitHubPublicUserRepoCommitsManager>();
-builder.Services.AddScoped<IGitHubPublicUserRepoCommitsProvider, GitHubPublicUserRepoCommitsProvider>();
 
 builder.Services.AddHttpClient("GitHub", client =>
 {

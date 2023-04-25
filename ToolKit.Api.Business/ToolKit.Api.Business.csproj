@@ -10,6 +10,7 @@
       <PackageReference Include="Microsoft.AspNetCore.Authorization" Version="7.0.5" />
       <PackageReference Include="Microsoft.Extensions.Http" Version="7.0.0" />
       <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+      <PackageReference Include="Octokit" Version="5.0.4" />
     </ItemGroup>
 
     <ItemGroup>
