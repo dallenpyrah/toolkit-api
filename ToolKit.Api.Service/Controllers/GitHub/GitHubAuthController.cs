@@ -1,10 +1,7 @@
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using ToolKit.Api.Business.Exceptions;
 using ToolKit.Api.Business.Exceptions.GitHub;
 using ToolKit.Api.Contracts;
 using ToolKit.Api.Contracts.GitHub;
-using ToolKit.Api.Interfaces.Managers;
 using ToolKit.Api.Interfaces.Managers.GitHub;
 
 namespace ToolKit.Api.Service.Controllers.GitHub;
@@ -18,7 +15,8 @@ public class GitHubAuthController : ControllerBase
     private ILogger<GitHubAuthController> _logger;
     private readonly IConfiguration _configuration;
 
-    public GitHubAuthController(IGitHubAuthManager gitHubAuthManager, IHttpClientFactory httpClientFactory, ILogger<GitHubAuthController> logger, IConfiguration configuration)
+    public GitHubAuthController(IGitHubAuthManager gitHubAuthManager, IHttpClientFactory httpClientFactory,
+        ILogger<GitHubAuthController> logger, IConfiguration configuration)
     {
         _gitHubAuthManager = gitHubAuthManager;
         _httpClientFactory = httpClientFactory;
@@ -33,9 +31,9 @@ public class GitHubAuthController : ControllerBase
         string installationUrl = $"https://github.com/apps/toolkit-desktop/installations/new?client_id={clientId}";
         return Redirect(installationUrl);
     }
-    
+
     [HttpGet("callback")]
-    public async Task<IActionResult> Callback(string code, string state)
+    public async Task<ActionResult<ApiResponse<GitHubAuthCallbackResponse>>> Callback(string code, string state)
     {
         try
         {

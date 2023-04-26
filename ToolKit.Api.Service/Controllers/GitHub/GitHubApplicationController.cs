@@ -1,5 +1,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Octokit;
+using ToolKit.Api.Contracts;
 using ToolKit.Api.Interfaces.Managers.GitHub;
 
 namespace ToolKit.Api.Service.Controllers.GitHub;
@@ -20,7 +22,7 @@ public class GitHubApplicationController : ControllerBase
 
     [HttpGet]
     [Authorize]
-    public async Task<IActionResult> GetAuthenticatedApp()
+    public async Task<ActionResult<ApiResponse<GitHubApp>>> GetAuthenticatedApp()
     {
         try
         {

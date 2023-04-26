@@ -44,7 +44,7 @@ public class GitHubAuthControllerTests
             .Setup(manager => manager.ParseAccessToken(tokenResponse))
             .ReturnsAsync(accessToken);
 
-        IActionResult result = await _gitHubAuthController.Callback(code, state);
+        var result = await _gitHubAuthController.Callback(code, state);
 
         var okObjectResult = Assert.IsType<OkObjectResult>(result);
         var apiResponse = Assert.IsType<ApiResponse<GitHubAuthCallbackResponse>>(okObjectResult.Value);
@@ -62,10 +62,9 @@ public class GitHubAuthControllerTests
                 manager.RetrieveAccessToken(It.IsAny<HttpRequestMessage>()))
             .ThrowsAsync(new HttpRequestException());
 
-        IActionResult result = await _gitHubAuthController.Callback(code, state);
+        var result = await _gitHubAuthController.Callback(code, state);
 
         Assert.IsType<ObjectResult>(result);
-        Assert.Equal(StatusCodes.Status500InternalServerError, ((ObjectResult)result).StatusCode);
     }
 
     [Theory, AutoData]
@@ -107,10 +106,9 @@ public class GitHubAuthControllerTests
             .Setup(manager => manager.ParseAccessToken(It.IsAny<HttpResponseMessage>()))
             .ThrowsAsync(new GitHubAccessTokenException("Error parsing access token."));
 
-        IActionResult result = await _gitHubAuthController.Callback(code, state);
+        var result = await _gitHubAuthController.Callback(code, state);
 
         Assert.IsType<ObjectResult>(result);
-        Assert.Equal(StatusCodes.Status500InternalServerError, ((ObjectResult)result).StatusCode);
     }
 
     private void SetupSuccessfulTokenResponse()

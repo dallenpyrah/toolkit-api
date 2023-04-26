@@ -62,6 +62,8 @@ builder.Services.AddSingleton<IGitHubJwtTokenManager>(new GitHubJwtTokenManager(
 builder.Services.AddScoped<IGitHubApplicationManager, GitHubApplicationManager>();
 builder.Services.AddScoped<IGitHubApplicationProvider, GitHubApplicationProvider>();
 builder.Services.AddScoped<IGitHubClientFactory, GitHubClientFactory>();
+builder.Services.AddScoped<IGitHubInstallationsManager, GitHubInstallationsManager>();
+builder.Services.AddScoped<IGitHubInstallationsProvider, GitHubInstallationsProvider>();
 
 builder.Services.AddHttpClient("GitHub", client =>
 {
@@ -81,7 +83,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(c =>
 {
-    // Other Swagger configurations
+    c.CustomSchemaIds(type => $"{type.FullName.Replace('.', '_')}");
 
     c.AddSecurityDefinition("oauth2", new OpenApiSecurityScheme
     {

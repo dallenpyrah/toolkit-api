@@ -17,23 +17,23 @@ public class UsersController : ControllerBase
     {
         _usersManager = usersManager;
     }
-    
+
     [HttpGet]
     [Authorize]
     public IActionResult GetUsers()
     {
         return Ok();
     }
-    
+
     [HttpGet("{id}")]
     [Authorize]
-    public IActionResult GetUserById(int id)
+    public ActionResult<ApiResponse<User>> GetUserById(int id)
     {
         try
         {
             ApiResponse<User> response = _usersManager.GetUserById(id);
             return Ok(response);
-        } 
+        }
         catch (UserNotFoundException e)
         {
             return StatusCode(StatusCodes.Status404NotFound, e.Message);
@@ -43,16 +43,16 @@ public class UsersController : ControllerBase
             return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
     }
-    
+
     [HttpPost]
     [Authorize]
-    public IActionResult CreateUser([FromBody]CreateUserRequest request)
+    public ActionResult<ApiResponse<User>> CreateUser([FromBody] CreateUserRequest request)
     {
         try
         {
             ApiResponse<User> response = _usersManager.CreateUser(request);
             return Ok(response);
-        } 
+        }
         catch (UserValidationException e)
         {
             return StatusCode(StatusCodes.Status422UnprocessableEntity, e.Message);
@@ -60,20 +60,20 @@ public class UsersController : ControllerBase
         catch (EmailAlreadyRegisteredException e)
         {
             return StatusCode(StatusCodes.Status409Conflict, e.Message);
-        } 
+        }
         catch (Exception e)
         {
             return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
         }
     }
-    
+
     [HttpPut("{id}")]
     [Authorize]
     public IActionResult UpdateUser(int id)
     {
         return Ok();
     }
-    
+
     [HttpDelete("{id}")]
     [Authorize]
     public IActionResult DeleteUser(int id)

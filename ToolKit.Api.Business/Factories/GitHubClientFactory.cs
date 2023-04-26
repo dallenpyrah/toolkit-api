@@ -21,4 +21,13 @@ public class GitHubClientFactory : IGitHubClientFactory
         };
         return client;
     }
+
+    public GitHubClient GetGitHubClientWithAccessToken(AccessToken accessToken)
+    {
+        var client = new GitHubClient(new ProductHeaderValue("toolkit-desktop"))
+        {
+            Credentials = new Credentials(accessToken.Token)
+        };
+        return client;
+    }
 }
