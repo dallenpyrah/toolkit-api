@@ -5,11 +5,13 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using ToolKit.Api.Business.Extensions;
+using ToolKit.Api.Business.Factories;
 using ToolKit.Api.Business.Managers;
 using ToolKit.Api.Business.Managers.GitHub;
 using ToolKit.Api.Business.Providers.GitHub;
 using ToolKit.Api.Data.Repositories;
 using ToolKit.Api.DataModel;
+using ToolKit.Api.Interfaces.Factories;
 using ToolKit.Api.Interfaces.Managers;
 using ToolKit.Api.Interfaces.Managers.GitHub;
 using ToolKit.Api.Interfaces.Providers.GitHub;
@@ -52,6 +54,14 @@ builder.Services.AddScoped<IUsersManager, UsersManager>();
 builder.Services.AddScoped<IUsersRepository, UsersRepository>();
 builder.Services.AddScoped<IGitHubAuthManager, GitHubAuthManager>();
 builder.Services.AddScoped<IGitHubAuthProvider, GitHubAuthProvider>();
+
+var privateKey = configuration["GitHub:PrivateKey"];
+var appId = int.Parse(configuration["GitHub:AppId"]);
+
+builder.Services.AddSingleton<IGitHubJwtTokenManager>(new GitHubJwtTokenManager(privateKey, appId));
+builder.Services.AddScoped<IGitHubApplicationManager, GitHubApplicationManager>();
+builder.Services.AddScoped<IGitHubApplicationProvider, GitHubApplicationProvider>();
+builder.Services.AddScoped<IGitHubClientFactory, GitHubClientFactory>();
 
 builder.Services.AddHttpClient("GitHub", client =>
 {

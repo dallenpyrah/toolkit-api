@@ -7,8 +7,12 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\ToolKit.Api.Contracts\ToolKit.Api.Contracts.csproj" />
-      <ProjectReference Include="..\ToolKit.Api.DataModel\ToolKit.Api.DataModel.csproj" />
+        <ProjectReference Include="..\ToolKit.Api.Contracts\ToolKit.Api.Contracts.csproj"/>
+        <ProjectReference Include="..\ToolKit.Api.DataModel\ToolKit.Api.DataModel.csproj"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Octokit" Version="5.0.4"/>
     </ItemGroup>
 
 </Project>
