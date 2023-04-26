@@ -1,6 +1,4 @@
 using Microsoft.Extensions.Configuration;
-using ToolKit.Api.Business.Managers.GitHub;
-using ToolKit.Api.Interfaces.Providers.GitHub;
 
 namespace ToolKit.Api.UnitTests.Business.Managers.GitHub;
 

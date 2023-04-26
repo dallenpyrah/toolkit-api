@@ -1,5 +1,4 @@
 using Octokit;
-using ToolKit.Api.Interfaces.Managers.GitHub;
 
 namespace ToolKit.Api.UnitTests.Service.Controllers.GitHub;
 

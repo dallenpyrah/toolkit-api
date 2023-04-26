@@ -33,14 +33,4 @@ public class GitHubInstallationsManager : IGitHubInstallationsManager
             Message = $"GitHub installation retrieved for {user} successfully."
         };
     }
-
-    public async Task<ApiResponse<AccessToken>> GetAccessTokenForInstallation(long installationId)
-    {
-        var accessToken = await _gitHubInstallationsProvider.GetAccessTokenForInstallation(installationId);
-        return new ApiResponse<AccessToken>()
-        {
-            Body = accessToken,
-            Message = $"GitHub access token retrieved for installation {installationId} successfully."
-        };
-    }
 }

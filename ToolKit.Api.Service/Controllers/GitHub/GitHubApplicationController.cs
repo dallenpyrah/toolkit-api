@@ -22,6 +22,8 @@ public class GitHubApplicationController : ControllerBase
 
     [HttpGet]
     [Authorize]
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ApiResponse<GitHubApp>))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
     public async Task<ActionResult<ApiResponse<GitHubApp>>> GetAuthenticatedApp()
     {
         try
