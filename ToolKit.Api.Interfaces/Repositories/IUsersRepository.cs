@@ -4,7 +4,7 @@ namespace ToolKit.Api.Interfaces.Repositories;
 
 public interface IUsersRepository
 {
-    User CreateUser(User user);
-    bool IsEmailAlreadyRegistered(string userEmail);
-    User? GetUserById(int id);
+    Task<User> CreateUser(User user);
+    Task<bool> IsEmailAlreadyRegistered(string userEmail);
+    Task<User?> GetUserById(int id);
 }

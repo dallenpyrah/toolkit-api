@@ -22,11 +22,11 @@ public class GitHubClientFactory : IGitHubClientFactory
         return client;
     }
 
-    public GitHubClient GetGitHubClientWithAccessToken(AccessToken accessToken)
+    public GitHubClient GetGitHubClientWithUserToken(string userToken)
     {
         var client = new GitHubClient(new ProductHeaderValue("toolkit-desktop"))
         {
-            Credentials = new Credentials(accessToken.Token)
+            Credentials = new Credentials(userToken, AuthenticationType.Bearer)
         };
         return client;
     }

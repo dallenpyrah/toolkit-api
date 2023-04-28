@@ -5,6 +5,6 @@ namespace ToolKit.Api.Interfaces.Managers;
 
 public interface IUsersManager
 {
-    ApiResponse<User> CreateUser(CreateUserRequest request);
-    ApiResponse<User> GetUserById(int id);
+    Task<User> CreateUser(CreateUserRequest request);
+    Task<User> GetUserById(int id);
 }

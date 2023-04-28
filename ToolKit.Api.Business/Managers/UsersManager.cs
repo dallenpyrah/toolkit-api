@@ -1,4 +1,3 @@
-using System.Net.Mail;
 using ToolKit.Api.Business.Exceptions;
 using ToolKit.Api.Business.Extensions;
 using ToolKit.Api.Contracts;
@@ -16,30 +15,30 @@ public class UsersManager : IUsersManager
     {
         _usersRepository = usersRepository;
     }
-    public ApiResponse<User> CreateUser(CreateUserRequest request)
+
+    public async Task<User> CreateUser(CreateUserRequest request)
     {
         request.Validate();
-        
-        bool isEmailAlreadyRegistered = _usersRepository.IsEmailAlreadyRegistered(request.Email);
+
+        var isEmailAlreadyRegistered = await _usersRepository.IsEmailAlreadyRegistered(request.Email);
         if (isEmailAlreadyRegistered)
         {
             throw new EmailAlreadyRegisteredException("Email already registered.");
         }
-        
+
         User user = request.ToUserEntity();
-        user = _usersRepository.CreateUser(user);
-        return user.ToApiResponse("User created successfully.");
+        return await _usersRepository.CreateUser(user);
     }
 
-    public ApiResponse<User> GetUserById(int id)
+    public async Task<User> GetUserById(int id)
     {
-        User? user = _usersRepository.GetUserById(id);
-        
+        var user = await _usersRepository.GetUserById(id);
+
         if (user == null)
         {
             throw new UserNotFoundException("User not found.");
         }
-        
-        return user.ToApiResponse("User found successfully.");
+
+        return user;
     }
 }

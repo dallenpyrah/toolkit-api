@@ -1,5 +1,4 @@
 using Octokit;
-using ToolKit.Api.Contracts;
 using ToolKit.Api.Interfaces.Managers.GitHub;
 using ToolKit.Api.Interfaces.Providers.GitHub;
 
@@ -14,13 +13,8 @@ public class GitHubApplicationManager : IGitHubApplicationManager
         _gitHubApplicationProvider = gitHubApplicationProvider;
     }
 
-    public async Task<ApiResponse<GitHubApp>> GetAuthenticatedApp()
+    public async Task<GitHubApp> GetAuthenticatedApp()
     {
-        var gitHubApp = await _gitHubApplicationProvider.GetAuthenticatedApp();
-        return new ApiResponse<GitHubApp>()
-        {
-            Body = gitHubApp,
-            Message = "GitHub App retrieved successfully."
-        };
+        return await _gitHubApplicationProvider.GetAuthenticatedApp();
     }
 }

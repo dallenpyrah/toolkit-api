@@ -33,7 +33,9 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Attributes" />
+        <Folder Include="Attributes"/>
+        <Folder Include="Business\Managers"/>
+        <Folder Include="Service\Controllers"/>
     </ItemGroup>
 
 </Project>

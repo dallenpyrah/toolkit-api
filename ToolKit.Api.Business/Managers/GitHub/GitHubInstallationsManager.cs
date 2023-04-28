@@ -1,5 +1,4 @@
 using Octokit;
-using ToolKit.Api.Contracts;
 using ToolKit.Api.Interfaces.Managers.GitHub;
 using ToolKit.Api.Interfaces.Providers.GitHub;
 
@@ -14,23 +13,13 @@ public class GitHubInstallationsManager : IGitHubInstallationsManager
         _gitHubInstallationsProvider = gitHubInstallationsProvider;
     }
 
-    public async Task<ApiResponse<IEnumerable<Installation>>> GetInstallations()
+    public async Task<IReadOnlyList<Installation>> GetInstallations()
     {
-        var installations = await _gitHubInstallationsProvider.GetInstallations();
-        return new ApiResponse<IEnumerable<Installation>>()
-        {
-            Body = installations,
-            Message = "GitHub Installations retrieved successfully."
-        };
+        return await _gitHubInstallationsProvider.GetInstallations();
     }
 
-    public async Task<ApiResponse<Installation>> GetInstallationsByUsername(string user)
+    public async Task<Installation> GetInstallationsByUsername(string user)
     {
-        var installation = await _gitHubInstallationsProvider.GetInstallationsByUsername(user);
-        return new ApiResponse<Installation>()
-        {
-            Body = installation,
-            Message = $"GitHub installation retrieved for {user} successfully."
-        };
+        return await _gitHubInstallationsProvider.GetInstallationsByUsername(user);
     }
 }

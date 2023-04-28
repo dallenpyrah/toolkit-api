@@ -22,9 +22,9 @@ public class GitHubApplicationController : ControllerBase
 
     [HttpGet]
     [Authorize]
-    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(ApiResponse<GitHubApp>))]
-    [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-    public async Task<ActionResult<ApiResponse<GitHubApp>>> GetAuthenticatedApp()
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GitHubApp))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponse))]
+    public async Task<ActionResult<GitHubApp>> GetAuthenticatedApp()
     {
         try
         {
@@ -34,7 +34,11 @@ public class GitHubApplicationController : ControllerBase
         catch (Exception e)
         {
             _logger.LogError(e, e.Message);
-            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponse()
+            {
+                Message = e.Message,
+                Details = "An error occurred while retrieving the GitHub App."
+            });
         }
     }
 }

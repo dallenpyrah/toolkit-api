@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using ToolKit.Api.DataModel;
 using ToolKit.Api.DataModel.Entities;
 using ToolKit.Api.Interfaces.Repositories;
@@ -14,20 +15,20 @@ public class UsersRepository : IUsersRepository
     }
 
 
-    public User CreateUser(User user)
+    public async Task<User> CreateUser(User user)
     {
-        _context.Users.Add(user);
-        _context.SaveChanges();
+        await _context.Users.AddAsync(user);
+        await _context.SaveChangesAsync();
         return user;
     }
 
-    public bool IsEmailAlreadyRegistered(string userEmail)
+    public async Task<bool> IsEmailAlreadyRegistered(string userEmail)
     {
-        return _context.Users.Any(u => u.Email == userEmail);
+        return await _context.Users.AnyAsync(u => u.Email == userEmail);
     }
 
-    public User? GetUserById(int id)
+    public async Task<User?> GetUserById(int id)
     {
-        return _context.Users.FirstOrDefault(u => u.Id == id);
+        return await _context.Users.FirstOrDefaultAsync(u => u.Id == id);
     }
 }

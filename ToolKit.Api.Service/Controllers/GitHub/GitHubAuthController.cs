@@ -24,6 +24,14 @@ public class GitHubAuthController : ControllerBase
         _configuration = configuration;
     }
 
+
+    [HttpGet("authenticate")]
+    public IActionResult Authenticate()
+    {
+        var githubAuthUrl = _gitHubAuthManager.GetGitHubAuthUrl();
+        return Redirect(githubAuthUrl);
+    }
+
     [HttpGet("install")]
     public IActionResult Install()
     {
@@ -33,7 +41,11 @@ public class GitHubAuthController : ControllerBase
     }
 
     [HttpGet("callback")]
-    public async Task<ActionResult<ApiResponse<GitHubAuthCallbackResponse>>> Callback(string code, string state)
+    [ProducesResponseType(StatusCodes.Status200OK, Type = typeof(GitHubAuthCallbackResponse))]
+    [ProducesResponseType(StatusCodes.Status400BadRequest, Type = typeof(ErrorResponse))]
+    [ProducesResponseType(StatusCodes.Status401Unauthorized, Type = typeof(ErrorResponse))]
+    [ProducesResponseType(StatusCodes.Status500InternalServerError, Type = typeof(ErrorResponse))]
+    public async Task<ActionResult<GitHubAuthCallbackResponse>> Callback(string code, string state)
     {
         try
         {
@@ -45,29 +57,37 @@ public class GitHubAuthController : ControllerBase
 
             string accessToken = await _gitHubAuthManager.ParseAccessToken(tokenResponse);
 
-            return Ok(new ApiResponse<GitHubAuthCallbackResponse>()
+            return Ok(new GitHubAuthCallbackResponse
             {
-                Body = new GitHubAuthCallbackResponse()
-                {
-                    AccessToken = accessToken
-                },
-                Message = "Successfully retrieved access token from GitHub."
+                AccessToken = accessToken
             });
         }
         catch (HttpRequestException e)
         {
             _logger.LogError(e, "An error occured while trying to retrieve access token from GitHub.");
-            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            return BadRequest(new ErrorResponse
+            {
+                Message = "An error occured while trying to retrieve access token from GitHub.",
+                Details = e.Message
+            });
         }
         catch (GitHubAccessTokenException e)
         {
             _logger.LogError(e, "An error occured while trying to parse access token from GitHub.");
-            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            return Unauthorized(new ErrorResponse
+            {
+                Message = "An error occured while trying to parse access token from GitHub.",
+                Details = e.Message
+            });
         }
         catch (Exception e)
         {
             _logger.LogError(e, "An unexpected error occurred.");
-            return StatusCode(StatusCodes.Status500InternalServerError, e.Message);
+            return StatusCode(StatusCodes.Status500InternalServerError, new ErrorResponse
+            {
+                Message = "An unexpected error occurred.",
+                Details = e.Message
+            });
         }
     }
 }

@@ -27,12 +27,12 @@ public class UsersController : ControllerBase
 
     [HttpGet("{id}")]
     [Authorize]
-    public ActionResult<ApiResponse<User>> GetUserById(int id)
+    public async Task<ActionResult<User>> GetUserById(int id)
     {
         try
         {
-            ApiResponse<User> response = _usersManager.GetUserById(id);
-            return Ok(response);
+            var user = await _usersManager.GetUserById(id);
+            return Ok(user);
         }
         catch (UserNotFoundException e)
         {
@@ -46,12 +46,12 @@ public class UsersController : ControllerBase
 
     [HttpPost]
     [Authorize]
-    public ActionResult<ApiResponse<User>> CreateUser([FromBody] CreateUserRequest request)
+    public async Task<ActionResult<User>> CreateUser([FromBody] CreateUserRequest request)
     {
         try
         {
-            ApiResponse<User> response = _usersManager.CreateUser(request);
-            return Ok(response);
+            var user = await _usersManager.CreateUser(request);
+            return Ok(user);
         }
         catch (UserValidationException e)
         {
