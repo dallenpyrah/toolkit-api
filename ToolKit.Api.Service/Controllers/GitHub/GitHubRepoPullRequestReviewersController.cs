@@ -1,5 +1,5 @@
 namespace ToolKit.Api.Service.Controllers.GitHub;
 
-public class GitHubRepoPullReviewersController
+public class GitHubRepoPullRequestReviewersController
 {
 }

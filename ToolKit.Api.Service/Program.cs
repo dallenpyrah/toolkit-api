@@ -65,7 +65,9 @@ builder.Services.AddScoped<IGitHubClientFactory, GitHubClientFactory>();
 builder.Services.AddScoped<IGitHubInstallationsManager, GitHubInstallationsManager>();
 builder.Services.AddScoped<IGitHubInstallationsProvider, GitHubInstallationsProvider>();
 builder.Services.AddScoped<IGitHubUserReposManager, GitHubUserReposManager>();
-builder.Services.AddScoped<IGitHubUserInstallationReposProvider, GitHubUserInstallationReposProvider>();
+builder.Services.AddScoped<IGitHubUserReposProvider, GitHubUserReposProvider>();
+builder.Services.AddScoped<IGitHubIssuesManager, GitHubIssuesManager>();
+builder.Services.AddScoped<IGitHubIssuesProvider, GitHubIssuesProvider>();
 
 builder.Services.AddHttpClient("GitHub", client =>
 {

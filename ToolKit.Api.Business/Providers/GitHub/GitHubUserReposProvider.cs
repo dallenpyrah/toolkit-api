@@ -4,11 +4,11 @@ using ToolKit.Api.Interfaces.Providers.GitHub;
 
 namespace ToolKit.Api.Business.Providers.GitHub;
 
-public class GitHubUserInstallationReposProvider : IGitHubUserInstallationReposProvider
+public class GitHubUserReposProvider : IGitHubUserReposProvider
 {
     private readonly IGitHubClientFactory _gitHubClientFactory;
 
-    public GitHubUserInstallationReposProvider(IGitHubClientFactory gitHubClientFactory)
+    public GitHubUserReposProvider(IGitHubClientFactory gitHubClientFactory)
     {
         _gitHubClientFactory = gitHubClientFactory;
     }

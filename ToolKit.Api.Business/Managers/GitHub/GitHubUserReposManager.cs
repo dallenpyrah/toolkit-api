@@ -6,20 +6,20 @@ namespace ToolKit.Api.Business.Managers.GitHub;
 
 public class GitHubUserReposManager : IGitHubUserReposManager
 {
-    private readonly IGitHubUserInstallationReposProvider _gitHubUserInstallationReposProvider;
+    private readonly IGitHubUserReposProvider _gitHubUserReposProvider;
 
-    public GitHubUserReposManager(IGitHubUserInstallationReposProvider gitHubUserInstallationReposProvider)
+    public GitHubUserReposManager(IGitHubUserReposProvider gitHubUserReposProvider)
     {
-        _gitHubUserInstallationReposProvider = gitHubUserInstallationReposProvider;
+        _gitHubUserReposProvider = gitHubUserReposProvider;
     }
 
     public async Task<IReadOnlyList<Repository>> GetAllUserRepos(string userToken)
     {
-        return await _gitHubUserInstallationReposProvider.GetInstallationRepos(userToken);
+        return await _gitHubUserReposProvider.GetInstallationRepos(userToken);
     }
 
     public async Task<Repository> GetUserReposById(string userToken, int repositoryId)
     {
-        return await _gitHubUserInstallationReposProvider.GetUserReposById(userToken, repositoryId);
+        return await _gitHubUserReposProvider.GetUserReposById(userToken, repositoryId);
     }
 }
